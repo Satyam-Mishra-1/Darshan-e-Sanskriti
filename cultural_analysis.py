@@ -5,8 +5,13 @@ import streamlit.components.v1 as components
 
 def show_cultural_analysis():
     # Full paths
-    notebook_path = r"D:\Desktop\Project-Pratice\Darshan-e-Sanskriti\src\India Tourism Analysis.ipynb"
-    html_output_path = Path("D:/Desktop/Project-Pratice/Darshan-e-Sanskriti/src/india_analysis_rendered.html")
+    # notebook_path = r"D:\Desktop\Project-Pratice\Darshan-e-Sanskriti\src\India Tourism Analysis.ipynb"
+    # html_output_path = Path("D:/Desktop/Project-Pratice/Darshan-e-Sanskriti/src/india_analysis_rendered.html")
+    from pathlib import Path
+
+    notebook_path = Path("src/India Tourism Analysis.ipynb")
+    html_output_path = Path("src/india_analysis_rendered.html")
+
 
     # Convert only if file doesn't exist
     if not html_output_path.exists():
