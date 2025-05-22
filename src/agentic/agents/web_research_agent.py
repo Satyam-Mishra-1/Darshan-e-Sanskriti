@@ -6,7 +6,7 @@ from src.agentic.logger import logging
 from src.agentic.exception import CustomException
 from src.agentic.tools.serper_search import SerperSearch
 from src.agentic.tools.search_articles import WikiArticles
-from src.agentic.agents.search_images import WikiImages
+from src.agentic.tools.search_images import WikiImages
 
 
 class WebResearchAgent:

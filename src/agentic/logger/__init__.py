@@ -1,13 +1,12 @@
 import logging
 import os
 from datetime import datetime
-from from_root import from_root
 
 # Generate a timestamped log filename
 LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 
 # Create the 'log' directory path
-log_dir = os.path.join(from_root(), 'log')
+log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'log')
 os.makedirs(log_dir, exist_ok=True)  # Ensure 'log' directory exists
 
 # Full log file path

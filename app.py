@@ -4,8 +4,8 @@ import json
 import altair as alt
 import re
 import requests
-from src.agentic.tools.serper_search import SerperSearch
 from src.agentic.agents.travel_agent import TravelAgent 
+from src.agentic.tools.serper_search import SerperSearch
 from map_visualizer import show_trip_map
 from cultural_analysis import show_cultural_analysis
 
@@ -148,8 +148,8 @@ def main():
 
                     st.markdown(f"### {idx}. {title}")
                     st.markdown(description)
-                    for img_url in image_urls:
-                        st.image(img_url, use_container_width=True)
+                    for img_url in image_urls:st.image(img_url, use_container_width=True)
+                        
             else:
                 st.warning("⚠️ No attraction data available.")
 
@@ -222,7 +222,7 @@ def main():
                 )
                 st.altair_chart(flights_chart, use_container_width=True)
                 
-                
+
             st.header("📋 Summary")
             with st.spinner("Summarizing your trip..."):
                 summary = agent.summarize_trip(destination, trip_type, budget, str(travel_dates))
