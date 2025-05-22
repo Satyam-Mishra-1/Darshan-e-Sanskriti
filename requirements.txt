@@ -3,3 +3,4 @@ python-dotenv
 streamlit
 ipykernel
 from_root
+google-generativeai
