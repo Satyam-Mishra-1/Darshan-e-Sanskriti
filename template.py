@@ -7,11 +7,6 @@ logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s')
 
 # List of files and directories relative to the current root
 list_of_files = [
-    "deployment/app.py",
-    "docs/Agentic RAG Pipeline.md",
-    "docs/Types of Agentic RAG.md",
-    "flowcharts/project_pipeline.png",
-    "notebooks/TripPlanner_Multi_AI_Agent_Experimental.ipynb",
     "src/agentic/agents/reporter_agent.py",
     "src/agentic/agents/travel_agent.py",
     "src/agentic/agents/web_research_agent.py",
@@ -25,13 +20,13 @@ list_of_files = [
     "src/agentic/utils/__init__.py",
     "src/agentic/utils/main_utils.py",
     ".gitignore",
-    "demo.py",
+    "app.py",
     "requirements.txt",
     "template.py"
 ]
 
 
-# File and directory creation logic
+
 for filepath in list_of_files:
     filepath = Path(filepath)
 
