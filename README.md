@@ -1,8 +1,96 @@
 # Darshan-e-Sanskriti
 
-**Darshan-e-Sanskriti** is a Streamlit-based AI-powered travel assistant that helps users explore Indian cultural heritage. It leverages large language models (LLMs) like Gemini to generate personalized travel itineraries and present cultural insights in an interactive, user-friendly web interface.
+### ✈️ AI-Powered Travel Planner
+
+An intelligent, all-in-one **travel planning assistant** built with **Streamlit**, **LLMs**, and **data agents**. Just input your preferences (origin, places, budget, etc.), and it will generate:
+
+- 🌍 An interactive travel map  
+- 🏰 Attraction recommendations with images  
+- 🌦️ Weather forecasts  
+- ✈️ Flights information  
+- 📋 A summarized travel guide  
 
 ---
+
+## 🚀 Features
+
+### 1. User Input Panel (Sidebar Form)
+
+Users start their journey by entering:
+
+- **Origin**: Where the trip begins  
+- **Destinations**: Comma-separated list of places to visit  
+- **First Destination**: The place the trip starts with  
+- **Trip Type**: Vacation / Business / Adventure / Cultural *(default is Vacation)*  
+- **Budget**: Range slider (₹1,000 to ₹5,00,000)  
+- **Travel Dates**: Select one or more dates  
+
+✅ **Validation** ensures required fields are filled. Missing info shows real-time warnings.
+
+---
+
+### 2. Interactive Map Display 🗺️
+
+After clicking **"Show Trip Map"**, it displays a **route map** from the origin to all specified destinations using:
+
+- **Folium** for map rendering  
+- **Polylines** to draw the path between waypoints  
+- **Map tiles** (e.g., OpenStreetMap)
+
+---
+
+### 3. Top Attractions 🏰
+
+For the **first destination**:
+
+- An **LLM-powered agent** (`TravelAgent`) fetches top attractions using tools like `WikiSearchAgent`, `SerperSearch`, and Google Image APIs.
+- Each attraction includes:
+  - Name  
+  - Description  
+  - Image *(validated for accessibility; falls back to Google Images)*
+
+Images are displayed using `st.image()` with `use_container_width=True`.
+
+---
+
+### 4. Weather Forecast 🌦️
+
+For selected **travel dates** and **destination**:
+
+- Calls the **weather research agent**
+- Parses model responses using robust **regex-based JSON extractors**
+
+Displays:
+- 📊 A **bar chart** of daily high/low temps using **Altair**  
+- 🧾 A **table** of weather summary  
+- 📝 Daily weather summaries with icons  
+- 💡 Custom travel recommendations based on forecast
+
+---
+
+### 5. Flight Search ✈️
+
+Finds flights from **origin** to the selected **destination** within the given **budget** and **travel dates**:
+
+- Uses `TravelAgent.search_flights()`
+- Parses flight info with fallback to `ast.literal_eval()` if JSON fails
+
+Displays:
+- 📋 Table of flights *(airline, departure, arrival, duration, price)*  
+- 📊 **Bar chart**: Airline vs Price *(with color indicating budget compliance)*
+
+---
+
+### 6. Smart Summary 📋
+
+Finally, it generates a **customized summary** of the entire trip using an LLM agent:
+
+- Covers destination, trip type, budget, and travel dates  
+- Uses `agent.summarize_trip()` with contextual inputs  
+- Displays a **short paragraph** to help the user visualize the whole experience
+
+---
+
 
 ## 🌐 Live Demo
 
@@ -14,7 +102,7 @@
 
 <div align="center">
 
-<img src="images/image1.png" alt="Home Screen" width="300"/>  
+<img src="images/image1.png" alt="Home Screen" width="900"/>  
 <br/><br/>
 
 | Image 1 | Image 2 | Image 3 | Image 4 |
@@ -37,16 +125,6 @@
 
 ---
 
-## 🚀 Features
-
-- ✅ AI-powered personalized travel planning  
-- 🤖 Integration with Google Gemini generative AI  
-- 🧠 Modular agentic design for extensibility  
-- ⚡ Real-time data fetching and processing  
-- 🖥️ Simple, intuitive Streamlit UI  
-- ☁️ Easy deployment on Streamlit Cloud  
-
----
 
 ## ⚙️ Local Setup Instructions
 
@@ -63,6 +141,7 @@
    python -m venv myenv
    # Windows:
    myenv\Scripts\activate
+   
    # macOS/Linux:
    source myenv/bin/activate
    ```
@@ -72,17 +151,47 @@
    ```bash
    pip install -r requirements.txt
    ```
+   
+## 📦 `requirements.txt`
+
+```txt
+taskflowai
+python-dotenv
+streamlit
+ipykernel
+from_root
+google-generativeai
+```
+
+**Note:**  
+Remove `-e .` unless you have a `setup.py` or `pyproject.toml`.
 
 4. **Create a `.env` file in the root directory**
 
    Add your environment variables here:
+   
+---
 
-   ```env
-   GOOGLE_API_KEY=your-google-api-key
-   MODEL_NAME=gemini-pro
-   ```
+## 🔐 Required Environment Variables
 
-5. **Run the app**
+| Variable Name          | Description                                      |
+|------------------------|--------------------------------------------------|
+| `WEATHER_API_KEY`      | API key for accessing weather data               |
+| `SERPER_API_KEY`       | API key for Serper (search engine)               |
+| `AMADEUS_API_KEY`      | API key for Amadeus travel API                   |
+| `AMADEUS_API_SECRET`   | API secret for Amadeus travel API                |
+| `GEMINI_API_KEY`       | API key for Google Gemini                        |
+| `GOOGLE_API_KEY`       | API key for Google Gemini or generative AI       |
+| `UNSPLASH_API_KEY`     | Unsplash API key                                 |
+| `UNSPLASH_ACCESS_KEY`  | Unsplash access key                              |
+| `UNSPLASH_SECRET_KEY`  | Unsplash secret key                              |
+| `PEXELS_API_KEY`       | Pexels API key                                   |
+
+
+---
+
+
+6. **Run the app**
 
    ```bash
    streamlit run app.py
@@ -101,36 +210,6 @@
    - Main file: `app.py`
 
 3. Add environment variables in **Manage App → Settings → Secrets**:
-
-   ```
-   GOOGLE_API_KEY = your-google-api-key
-   MODEL_NAME = gemini-pro
-   ```
-
----
-
-## 🔐 Required Environment Variables
-
-| Variable Name    | Description                                     |
-|------------------|-------------------------------------------------|
-| `GOOGLE_API_KEY` | API key for Google Gemini or generative AI      |
-| `MODEL_NAME`     | Name of the LLM model to use (e.g., gemini-pro) |
-
----
-
-## 📦 `requirements.txt`
-
-```txt
-taskflowai
-python-dotenv
-streamlit
-ipykernel
-from_root
-google-generativeai
-```
-
-**Note:**  
-Remove `-e .` unless you have a `setup.py` or `pyproject.toml`.
 
 ---
 
